@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" />
+
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/spinner.css">
+  <link rel="stylesheet" href="css/svg.css">
+  <link rel="stylesheet" href="css/dimensions.css">
+
+<body onload="processData()">
+
+  <div id="spinner">
+    <div id="loader"></div>
+  </div>
+
+  <div class="header"> World Statistics </div>
+
+  <!-- Tabs -->
+  <div class="tab topnav" id="myTopnav">
+
+    <div class="dropdown">
+        <button class="dropbtn"> Data Reduction </button>
+        <div class="dropdown-content">
+            <a id="defaultOpen" href="#sampling" class="tablinks" onclick="openTab(event, 'Sampling')">Sampling</a>
+            <a href="#clustering" class="tablinks" onclick="openTab(event, 'Clustering')">Clustering</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn"> Dimension Reduction </button>
+        <div class="dropdown-content">
+            <a href="#dimensions" class="tablinks" onclick="openTab(event, 'Dimensions')">Dimensions</a>
+            <a href="#scree_plot" class="tablinks" onclick="openTab(event, 'Scree Plot')">Scree Plot</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn"> Comparison of PCA Components </button>
+        <div class="dropdown-content">
+            <a href="#pca_vectors" class="tablinks" onclick="openTab(event, 'Top 2 PCA Vectors - Scatter Plot')">Top 2 PCA vectors</a>
+            <a href="#mds_correlation" class="tablinks" onclick="openTab(event, 'MDS using Correlation Distance')">MDS using Correlation Distance</a>
+            <a href="#mds_euclidean" class="tablinks" onclick="openTab(event, 'MDS using Euclidean Distance')">MDS using Euclidean Distance</a>
+            <a href="#pca_loaded_attrs" class="tablinks" onclick="openTab(event, 'Top 3 PCA Data ScatterPlot Matrix')">Top 3 PCA loaded attributes</a>
+        </div>
+    </div>
+
+  </div>
+
+  <!-- Tab Content -->
+  <div id="Clustering_Content" class="tabcontent">
+    <h3 align="center"> Stratified Sampling Elbow Plot </h3>
+    <div id="elbow_plot" class="charts"></div>
+  </div>
+  
+  <div id="common_radio_buttons" class="tabcontent">
+    <h3 id="page_header" align="center"></h3>
+    <div class="chart-container" align="center">
+      <form class="controls">
+          <label>
+            <label><input type="radio" name="sampling" onChange="radio_select()" value="no" id="default_checked"> Before Sampling </label>
+            <label><input type="radio" name="sampling" onChange="radio_select()" value="random"> After Random Sampling </label>
+            <label><input type="radio" name="sampling" onChange="radio_select()" value="stratified"> After Stratified Sampling </label>
+          </label>
+      </form>
+      <div id="text_info"></div>
+      <div id="visualize"></div>
+
+      <div id="dimensions">
+
+        <div class="row">
+          <div class="col" id="Country" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/country.png" />
+              <figcaption align="center">Country</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Region" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/region.png" />
+              <figcaption>Region</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Date">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/date.jfif" />
+              <figcaption>Date</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Gender">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/gender.jpg" />
+              <figcaption>Gender</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Population_Density">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/population_density.png" />
+              <figcaption>Population Density</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Life_Expectancy">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/life_expectancy.jfif" />
+              <figcaption>Life Expectancy</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" id="Health_Expenditure_Govt" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/health_exp_govt.JPG" />
+              <figcaption>Health Exp by Goverment</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Health_Expenditure_Pvt" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/health_exp_pvt.JPG" />
+              <figcaption>Health Exp by Pvt Firms</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Health_Expenditure_Indv">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/health_exp_indv.JPG" />
+              <figcaption>Health Exp by Individual</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Education_Expenditure">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/education_exp.jfif" />
+              <figcaption>Education Expenditure</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Mean_years_in_school">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/mean_years_in_school.png" />
+              <figcaption>Mean years in school</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Average_Income">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/avg_income.png" />
+              <figcaption>Average Income</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" id="Employment_Rate" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/employment_rate.webp" />
+              <figcaption>Employment Rate</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Income_Inequality" >
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/income_inequality.JPG" />
+              <figcaption>Income Inequality</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Child_Mortality_Rate">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/child_mortality.JPG" />
+              <figcaption>Child Mortality Rate</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Adult_Mortality_Rate">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/adult_mortality.JPG" />
+              <figcaption>Adult Mortality Rate</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Suicides">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/suicide.png" />
+              <figcaption>No. of Suicides</figcaption>
+            </figure>
+          </div>
+          <div class="col" id="Murders">
+            <i class="cross fa">&#10060;</i>
+            <figure>
+              <img src="images/murder.png" />
+              <figcaption>No. of Murders</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script src="https://d3js.org/queue.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+  <script type="text/javascript" src="js/process_data.js"></script>
+  <script type="text/javascript" src="js/menu.js"></script>
+  <script type="text/javascript" src="js/map_tooltip.js"></script>
+  <script type="text/javascript" src="js/map.js"></script>
+  <script type="text/javascript" src="js/elbow_plot.js"></script>
+  <script type="text/javascript" src="js/dimensions.js"></script>
+  <script type="text/javascript" src="js/scree_plot.js"></script>
+  <script type="text/javascript" src="js/scatter_plot.js"></script>
+  <script type="text/javascript" src="js/scatterplot_matrix.js"></script>
+
+</body>
+</html>

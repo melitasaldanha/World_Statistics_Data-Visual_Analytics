@@ -1,0 +1,49 @@
+#dimensions {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 70%;
+  margin-top: 0.5%;
+}
+
+#dimensions .row {
+  width: 100%;
+  height: 33%;
+}
+
+#dimensions .col {
+  display: block;
+  float: left;
+  position: relative;
+  width: 16.66%;
+  height: 100%;
+}
+
+#dimensions .cross {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  display: none;
+  font-size: 100%;
+  text-align: center;
+  float: left;
+  background-color: inherit;
+}
+
+#dimensions figure {
+  position: relative;
+  display: block;
+  width: 50%;
+  height: 50%;
+}
+
+#dimensions img {
+  width: 80%;
+  height: 80%;
+  align: center;
+}
+
+#dimensions figcaption {
+  font-size: 100%;
+  align: center;
+}
